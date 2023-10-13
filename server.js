@@ -15,9 +15,12 @@ app.get('/api/users', async (req, res) => {
         const formattedData = data.map(user => ({
             id: user.id,
             name: user.name,
+            username: user.username,
             email: user.email,
+            address: user.address,
+            phone: user.phone,
             website: user.website,
-            companyName: user.company.name,
+            company: user.company
         }));
 
         res.json(formattedData);

@@ -14,12 +14,31 @@ const UserDataTable = () => {
     };
 
     useEffect(() => {
-        const results = data.filter((user) =>
-            Object.values(user)
-                .join(' ')
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase())
-        );
+        const results = data.filter((user) => {
+            const searchableFields = [
+                'name',
+                'username',
+                'email',
+                'phone',
+                'website',
+                'address',
+                'company',
+            ];
+
+            return searchableFields.some((field) => {
+                if (typeof user[field] === 'object') {
+                    return Object.values(user[field])
+                        .join(' ')
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase());
+                } else {
+                    return String(user[field])
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase());
+                }
+            });
+        });
+
         setSearchResults(results);
     }, [data, searchTerm]);
 
@@ -74,7 +93,7 @@ const UserDataTable = () => {
                         <tr>
                             <th className="px-4 py-2 bg-gray-100">ID</th>
                             <th className="px-4 py-2 bg-gray-100">Name</th>
-                            <th className="px-4 py-2 bg-gray-100">Username</th>
+                            <th className="px-4 py-2 bg-gray-100">UserName</th>
                             <th className="px-4 py-2 bg-gray-100">Email</th>
                             <th className="px-4 py-2 bg-gray-100">Details</th>
                         </tr>

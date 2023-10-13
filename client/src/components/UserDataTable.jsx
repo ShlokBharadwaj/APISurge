@@ -15,7 +15,10 @@ const UserDataTable = () => {
 
     useEffect(() => {
         const results = data.filter((user) =>
-            user.name.toLowerCase().includes(searchTerm.toLowerCase())
+            Object.values(user)
+                .join(' ')
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())
         );
         setSearchResults(results);
     }, [data, searchTerm]);
@@ -56,7 +59,7 @@ const UserDataTable = () => {
         <div className="m-4 overflow-x-auto">
             <input
                 type="text"
-                placeholder="Search by name..."
+                placeholder="Search..."
                 value={searchTerm}
                 onChange={handleSearch}
                 className="block mx-auto my-4 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"

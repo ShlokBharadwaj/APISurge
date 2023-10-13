@@ -63,12 +63,27 @@ const UserDataTable = () => {
                                 <td className="border px-4 py-2">{user.username}</td>
                                 <td className="border px-4 py-2">{user.email}</td>
                                 <td className="border px-4 py-2">
-                                    <button
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                        onClick={() => handleDetailsToggle(user.id)}
-                                    >
-                                        {showDetails[user.id] ? 'Hide Details' : 'More Details'}
-                                    </button>
+                                    {showDetails[user.id] ? (
+                                        <div>
+                                            <p className="text-sm">Phone: {user.phone}</p>
+                                            <p className="text-sm">Website: {user.website}</p>
+                                            <p className="text-sm">Address: {user.address.street}, {user.address.suite}, {user.address.city}, {user.address.zipcode}</p>
+                                            <p className="text-sm">Company: {user.company.name}, {user.company.catchPhrase}, {user.company.bs}</p>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
+                                                onClick={() => handleDetailsToggle(user.id)}
+                                            >
+                                                Hide Details
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <button
+                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
+                                            onClick={() => handleDetailsToggle(user.id)}
+                                        >
+                                            More Details
+                                        </button>
+                                    )}
                                 </td>
                             </tr>
                         ))}

@@ -30,28 +30,28 @@ const UserDataTable = () => {
     }, []);
 
     return (
-        <div>
+        <div className="m-4 overflow-x-auto">
             {loading ? (
-                <div>Loading...</div>
+                <div className="text-center text-2xl font-bold">Loading...</div>
             ) : error ? (
-                <div>Error: {error}</div>
+                <div className="text-center text-2xl font-bold text-red-500">Error: {error}</div>
             ) : (
-                <table>
+                <table className="table-auto w-full">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>Email</th>
+                            <th className="px-4 py-2">ID</th>
+                            <th className="px-4 py-2">Name</th>
+                            <th className="px-4 py-2">Username</th>
+                            <th className="px-4 py-2">Email</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.map((user) => (
-                            <tr key={user.id}>
-                                <td>{user.id}</td>
-                                <td>{user.name}</td>
-                                <td>{user.username}</td>
-                                <td>{user.email}</td>
+                            <tr key={user.id} className="text-center">
+                                <td className="border px-4 py-2">{user.id}</td>
+                                <td className="border px-4 py-2">{user.name}</td>
+                                <td className="border px-4 py-2">{user.username}</td>
+                                <td className="border px-4 py-2">{user.email}</td>
                             </tr>
                         ))}
                     </tbody>

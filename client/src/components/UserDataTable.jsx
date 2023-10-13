@@ -45,14 +45,14 @@ const UserDataTable = () => {
             ) : error ? (
                 <div className="text-center text-2xl font-bold text-red-500">Error: {error}</div>
             ) : (
-                <table className="table-auto w-full">
+                <table className="table-auto w-full rounded-lg overflow-hidden">
                     <thead>
                         <tr>
-                            <th className="px-4 py-2">ID</th>
-                            <th className="px-4 py-2">Name</th>
-                            <th className="px-4 py-2">Username</th>
-                            <th className="px-4 py-2">Email</th>
-                            <th className="px-4 py-2">Details</th>
+                            <th className="px-4 py-2 bg-gray-100">ID</th>
+                            <th className="px-4 py-2 bg-gray-100">Name</th>
+                            <th className="px-4 py-2 bg-gray-100">Username</th>
+                            <th className="px-4 py-2 bg-gray-100">Email</th>
+                            <th className="px-4 py-2 bg-gray-100">Details</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,7 +76,6 @@ const UserDataTable = () => {
                                                 Hide Details
                                             </button>
                                         </div>
-
                                     ) : (
                                         <button
                                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"

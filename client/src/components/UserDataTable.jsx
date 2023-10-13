@@ -6,6 +6,20 @@ const UserDataTable = () => {
     const [loading, setLoading] = useState(true);
     const maxRetries = 4;
 
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    useEffect(() => {
+        const results = data.filter((user) =>
+            user.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setSearchResults(results);
+    }, [data, searchTerm]);
+
     const fetchData = async (retryCount) => {
         try {
             const response = await fetch('http://localhost:3001/api/users');
@@ -40,6 +54,13 @@ const UserDataTable = () => {
 
     return (
         <div className="m-4 overflow-x-auto">
+            <input
+                type="text"
+                placeholder="Search by name..."
+                value={searchTerm}
+                onChange={handleSearch}
+                className="block mx-auto my-4 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
+            />
             {loading ? (
                 <div className="text-center text-2xl font-bold">Loading...</div>
             ) : error ? (
@@ -56,7 +77,7 @@ const UserDataTable = () => {
                         </tr>
                     </thead>
                     <tbody className='border rounded'>
-                        {data.map((user) => (
+                        {(searchTerm ? searchResults : data).map((user) => (
                             <tr key={user.id} className="text-center">
                                 <td className="border px-4 py-2">{user.id}</td>
                                 <td className="border px-4 py-2">{user.name}</td>

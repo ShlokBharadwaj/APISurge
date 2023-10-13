@@ -43,6 +43,7 @@ const UserDataTable = () => {
                             <th className="px-4 py-2">Name</th>
                             <th className="px-4 py-2">Username</th>
                             <th className="px-4 py-2">Email</th>
+                            <th className="px-4 py-2">Details</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,6 +53,11 @@ const UserDataTable = () => {
                                 <td className="border px-4 py-2">{user.name}</td>
                                 <td className="border px-4 py-2">{user.username}</td>
                                 <td className="border px-4 py-2">{user.email}</td>
+                                <td className="border px-4 py-2">
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        More Details
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

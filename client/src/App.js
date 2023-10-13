@@ -1,7 +1,14 @@
-export default function App() {
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import UserDataTable from './components/UserDataTable';
+
+const App = () => {
   return (
-    <h1 className="text-2xl font-bold underline">
-      Hello world!
-    </h1>
-  )
-}
+    <Routes>
+      <Route path="/" element={<Navigate to="/users" />} />
+      <Route path="/users" element={<UserDataTable />} />
+    </Routes>
+  );
+};
+
+export default App;

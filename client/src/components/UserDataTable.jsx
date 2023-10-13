@@ -55,7 +55,7 @@ const UserDataTable = () => {
                             <th className="px-4 py-2 bg-gray-100">Details</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='border rounded'>
                         {data.map((user) => (
                             <tr key={user.id} className="text-center">
                                 <td className="border px-4 py-2">{user.id}</td>

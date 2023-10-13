@@ -29,10 +29,13 @@ const UserDataTable = () => {
         fetchData(maxRetries);
     }, []);
 
-    const [showDetails, setShowDetails] = useState(false);
+    const [showDetails, setShowDetails] = useState({});
 
-    const handleDetailsToggle = () => {
-        setShowDetails(!showDetails);
+    const handleDetailsToggle = (id) => {
+        setShowDetails((prev) => ({
+            ...prev,
+            [id]: !prev[id],
+        }));
     };
 
     return (
@@ -62,9 +65,9 @@ const UserDataTable = () => {
                                 <td className="border px-4 py-2">
                                     <button
                                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                        onClick={handleDetailsToggle}
+                                        onClick={() => handleDetailsToggle(user.id)}
                                     >
-                                        {showDetails ? 'Hide Details' : 'Show Details'}
+                                        {showDetails[user.id] ? 'Hide Details' : 'More Details'}
                                     </button>
                                 </td>
                             </tr>

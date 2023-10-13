@@ -16,6 +16,8 @@ app.get('/api/users', async (req, res) => {
             id: user.id,
             name: user.name,
             email: user.email,
+            website: user.website,
+            companyName: user.company.name,
         }));
 
         res.json(formattedData);

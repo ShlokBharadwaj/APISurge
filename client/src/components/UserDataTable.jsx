@@ -29,6 +29,12 @@ const UserDataTable = () => {
         fetchData(maxRetries);
     }, []);
 
+    const [showDetails, setShowDetails] = useState(false);
+
+    const handleDetailsToggle = () => {
+        setShowDetails(!showDetails);
+    };
+
     return (
         <div className="m-4 overflow-x-auto">
             {loading ? (
@@ -54,8 +60,11 @@ const UserDataTable = () => {
                                 <td className="border px-4 py-2">{user.username}</td>
                                 <td className="border px-4 py-2">{user.email}</td>
                                 <td className="border px-4 py-2">
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                        More Details
+                                    <button
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                        onClick={handleDetailsToggle}
+                                    >
+                                        {showDetails ? 'Hide Details' : 'Show Details'}
                                     </button>
                                 </td>
                             </tr>

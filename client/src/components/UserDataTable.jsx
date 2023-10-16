@@ -99,6 +99,7 @@ const UserDataTable = () => {
                 value={searchTerm}
                 onChange={handleSearch}
                 className="block mx-auto my-4 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
+                autoFocus
             />
             {loading ? (
                 <div className="text-center text-2xl font-bold">Loading...</div>

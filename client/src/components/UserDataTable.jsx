@@ -165,10 +165,21 @@ const UserDataTable = () => {
                     <table className="table-auto w-full rounded-lg overflow-hidden">
                         <thead>
                             <tr>
-                                <th className="px-4 py-2 bg-gray-100" onClick={() => requestSort('id')}>ID</th>
-                                <th className="px-4 py-2 bg-gray-100" onClick={() => requestSort('name')}>Name</th>
-                                <th className="px-4 py-2 bg-gray-100" onClick={() => requestSort('username')}>UserName</th>
-                                <th className="px-4 py-2 bg-gray-100" onClick={() => requestSort('email')}>Email</th>
+                                <th className="px-4 py-2 bg-gray-100 cursor-pointer" onClick={() => requestSort('id')}>ID {sortConfig && sortConfig.key === 'id' && (
+                                    <span>{sortConfig.direction === 'ascending' ? '⬆️' : '⬇️'}</span>
+                                )}
+                                    {!sortConfig && (
+                                        <span>⬆️</span>
+                                    )}</th>
+                                <th className="px-4 py-2 bg-gray-100 cursor-pointer" onClick={() => requestSort('name')}>Name {sortConfig && sortConfig.key === 'name' && (
+                                    <span>{sortConfig.direction === 'ascending' ? '⬆️' : '⬇️'}</span>
+                                )}</th>
+                                <th className="px-4 py-2 bg-gray-100 cursor-pointer" onClick={() => requestSort('username')}>UserName {sortConfig && sortConfig.key === 'username' && (
+                                    <span>{sortConfig.direction === 'ascending' ? '⬆️' : '⬇️'}</span>
+                                )}</th>
+                                <th className="px-4 py-2 bg-gray-100 cursor-pointer" onClick={() => requestSort('email')}>Email {sortConfig && sortConfig.key === 'email' && (
+                                    <span>{sortConfig.direction === 'ascending' ? '⬆️' : '⬇️'}</span>
+                                )}</th>
                                 <th className="px-4 py-2 bg-gray-100">Details</th>
                             </tr>
                         </thead>

@@ -66,6 +66,8 @@ const UserDataTable = () => {
     }, []);
 
     const [showDetails, setShowDetails] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
     const handleDetailsToggle = (id) => {
         setShowDetails((prev) => ({
@@ -91,6 +93,15 @@ const UserDataTable = () => {
         return text;
     };
 
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = (searchTerm ? searchResults : data).slice(indexOfFirstItem, indexOfLastItem);
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil((searchTerm ? searchResults : data).length / itemsPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
     return (
         <div className="m-4 overflow-x-auto">
             <input
@@ -106,50 +117,80 @@ const UserDataTable = () => {
             ) : error ? (
                 <div className="text-center text-2xl font-bold text-red-500">Error: {error}</div>
             ) : (
-                <table className="table-auto w-full rounded-lg overflow-hidden">
-                    <thead>
-                        <tr>
-                            <th className="px-4 py-2 bg-gray-100">ID</th>
-                            <th className="px-4 py-2 bg-gray-100">Name</th>
-                            <th className="px-4 py-2 bg-gray-100">UserName</th>
-                            <th className="px-4 py-2 bg-gray-100">Email</th>
-                            <th className="px-4 py-2 bg-gray-100">Details</th>
-                        </tr>
-                    </thead>
-                    <tbody className='border rounded'>
-                        {(searchTerm ? searchResults : data).map((user) => (
-                            <tr key={user.id} className="text-center">
-                                <td className="border px-4 py-2">{user.id}</td>
-                                <td className="border px-4 py-2">{highlightText(user.name, searchTerm)}</td>
-                                <td className="border px-4 py-2">{highlightText(user.username, searchTerm)}</td>
-                                <td className="border px-4 py-2">{highlightText(user.email, searchTerm)}</td>
-                                <td className="border px-4 py-2">
-                                    {showDetails[user.id] ? (
-                                        <div>
-                                            <p className="text-sm"><span className="font-bold">Phone:</span> {highlightText(user.phone, searchTerm)}</p>
-                                            <p className="text-sm"><span className="font-bold">Website:</span> {highlightText(user.website, searchTerm)}</p>
-                                            <p className="text-sm"><span className="font-bold">Address:</span> {highlightText(user.address.street, searchTerm)}, {highlightText(user.address.suite, searchTerm)}, {highlightText(user.address.city, searchTerm)}, {highlightText(user.address.zipcode, searchTerm)}</p>
-                                            <p className="text-sm"><span className="font-bold">Company:</span> {highlightText(user.company.name, searchTerm)}, {highlightText(user.company.catchPhrase, searchTerm)}, {highlightText(user.company.bs, searchTerm)}</p>
+                <div>
+                    <table className="table-auto w-full rounded-lg overflow-hidden">
+                        <thead>
+                            <tr>
+                                <th className="px-4 py-2 bg-gray-100">ID</th>
+                                <th className="px-4 py-2 bg-gray-100">Name</th>
+                                <th className="px-4 py-2 bg-gray-100">UserName</th>
+                                <th className="px-4 py-2 bg-gray-100">Email</th>
+                                <th className="px-4 py-2 bg-gray-100">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody className="border rounded">
+                            {currentItems.map((user) => (
+                                <tr key={user.id} className="text-center">
+                                    <td className="border px-4 py-2">{user.id}</td>
+                                    <td className="border px-4 py-2">{highlightText(user.name, searchTerm)}</td>
+                                    <td className="border px-4 py-2">{highlightText(user.username, searchTerm)}</td>
+                                    <td className="border px-4 py-2">{highlightText(user.email, searchTerm)}</td>
+                                    <td className="border px-4 py-2">
+                                        {showDetails[user.id] ? (
+                                            <div>
+                                                <p className="text-sm">
+                                                    <span className="font-bold">Phone:</span>{' '}
+                                                    {highlightText(user.phone, searchTerm)}
+                                                </p>
+                                                <p className="text-sm">
+                                                    <span className="font-bold">Website:</span>{' '}
+                                                    {highlightText(user.website, searchTerm)}
+                                                </p>
+                                                <p className="text-sm">
+                                                    <span className="font-bold">Address:</span>{' '}
+                                                    {highlightText(user.address.street, searchTerm)},{' '}
+                                                    {highlightText(user.address.suite, searchTerm)},{' '}
+                                                    {highlightText(user.address.city, searchTerm)},{' '}
+                                                    {highlightText(user.address.zipcode, searchTerm)}
+                                                </p>
+                                                <p className="text-sm">
+                                                    <span className="font-bold">Company:</span>{' '}
+                                                    {highlightText(user.company.name, searchTerm)},{' '}
+                                                    {highlightText(user.company.catchPhrase, searchTerm)},{' '}
+                                                    {highlightText(user.company.bs, searchTerm)}
+                                                </p>
+                                                <button
+                                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
+                                                    onClick={() => handleDetailsToggle(user.id)}
+                                                >
+                                                    Hide Details
+                                                </button>
+                                            </div>
+                                        ) : (
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
                                                 onClick={() => handleDetailsToggle(user.id)}
                                             >
-                                                Hide Details
+                                                More Details
                                             </button>
-                                        </div>
-                                    ) : (
-                                        <button
-                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
-                                            onClick={() => handleDetailsToggle(user.id)}
-                                        >
-                                            More Details
-                                        </button>
-                                    )}
-                                </td>
-                            </tr>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <div className="flex justify-center mt-4">
+                        {pageNumbers.map((number) => (
+                            <button
+                                key={number}
+                                onClick={() => setCurrentPage(number)}
+                                className="mx-1 px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
+                            >
+                                {number}
+                            </button>
                         ))}
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             )}
         </div>
     );

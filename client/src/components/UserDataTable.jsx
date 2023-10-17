@@ -10,6 +10,32 @@ const UserDataTable = () => {
     const [searchResults, setSearchResults] = useState([]);
     const searchInput = useRef(null);
 
+    const [sortConfig, setSortConfig] = useState(null);
+
+    const sortedData = React.useMemo(() => {
+        if (sortConfig !== null) {
+            const sortedArray = data.slice().sort((a, b) => {
+                if (a[sortConfig.key] < b[sortConfig.key]) {
+                    return sortConfig.direction === 'ascending' ? -1 : 1;
+                }
+                if (a[sortConfig.key] > b[sortConfig.key]) {
+                    return sortConfig.direction === 'ascending' ? 1 : -1;
+                }
+                return 0;
+            });
+            return sortedArray;
+        }
+        return data;
+    }, [data, sortConfig]);
+
+    const requestSort = (key) => {
+        let direction = 'ascending';
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+            direction = 'descending';
+        }
+        setSortConfig({ key, direction });
+    };
+
     useEffect(() => {
         const handleKeyPress = (event) => {
             if (event.key === '/') {
@@ -108,9 +134,11 @@ const UserDataTable = () => {
         return text;
     };
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = (searchTerm ? searchResults : data).slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = React.useMemo(() => {
+        const indexOfLastItem = currentPage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        return (searchTerm ? searchResults : sortedData).slice(indexOfFirstItem, indexOfLastItem);
+    }, [currentPage, itemsPerPage, searchTerm, searchResults, sortedData]);
 
     const pageNumbers = [];
     for (let i = 1; i <= Math.ceil((searchTerm ? searchResults : data).length / itemsPerPage); i++) {
@@ -137,10 +165,10 @@ const UserDataTable = () => {
                     <table className="table-auto w-full rounded-lg overflow-hidden">
                         <thead>
                             <tr>
-                                <th className="px-4 py-2 bg-gray-100">ID</th>
-                                <th className="px-4 py-2 bg-gray-100">Name</th>
-                                <th className="px-4 py-2 bg-gray-100">UserName</th>
-                                <th className="px-4 py-2 bg-gray-100">Email</th>
+                                <th className="px-4 py-2 bg-gray-100" onClick={() => requestSort('id')}>ID</th>
+                                <th className="px-4 py-2 bg-gray-100" onClick={() => requestSort('name')}>Name</th>
+                                <th className="px-4 py-2 bg-gray-100" onClick={() => requestSort('username')}>UserName</th>
+                                <th className="px-4 py-2 bg-gray-100" onClick={() => requestSort('email')}>Email</th>
                                 <th className="px-4 py-2 bg-gray-100">Details</th>
                             </tr>
                         </thead>

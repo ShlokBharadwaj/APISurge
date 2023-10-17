@@ -160,7 +160,7 @@ const UserDataTable = () => {
                                                     {highlightText(user.company.bs, searchTerm)}
                                                 </p>
                                                 <button
-                                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
+                                                    className="bg-white hover:bg-gray-100 text-black border border-gray-400 font-bold py-2 px-4 rounded my-2"
                                                     onClick={() => handleDetailsToggle(user.id)}
                                                 >
                                                     Hide Details
@@ -185,7 +185,7 @@ const UserDataTable = () => {
                                 key={number}
                                 onClick={() => setCurrentPage(number)}
                                 className={`mx-1 px-4 py-2 ${number === currentPage
-                                        ? 'bg-white text-black border border-gray-400'
+                                        ? 'bg-white hover:bg-gray-100 text-black border border-gray-400'
                                         : 'bg-blue-500 hover:bg-blue-700 text-white'
                                     } font-bold rounded`}
                             >

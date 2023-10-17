@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const UserDataTable = () => {
     const [data, setData] = useState([]);
@@ -8,6 +8,21 @@ const UserDataTable = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const searchInput = useRef(null);
+
+    useEffect(() => {
+        const handleKeyPress = (event) => {
+            if (event.key === '/') {
+                event.preventDefault();
+                searchInput.current.focus();
+            }
+        };
+
+        document.addEventListener('keypress', handleKeyPress);
+        return () => {
+            document.removeEventListener('keypress', handleKeyPress);
+        };
+    }, []);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -109,6 +124,7 @@ const UserDataTable = () => {
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={handleSearch}
+                ref={searchInput}
                 className="block mx-auto my-4 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-indigo-500"
                 autoFocus
             />
@@ -185,16 +201,22 @@ const UserDataTable = () => {
                                 key={number}
                                 onClick={() => setCurrentPage(number)}
                                 className={`mx-1 px-4 py-2 ${number === currentPage
-                                        ? 'bg-white hover:bg-gray-100 text-black border border-gray-400'
-                                        : 'bg-blue-500 hover:bg-blue-700 text-white'
+                                    ? 'bg-white hover:bg-gray-100 text-black border border-gray-400'
+                                    : 'bg-blue-500 hover:bg-blue-700 text-white'
                                     } font-bold rounded`}
                             >
                                 {number}
                             </button>
                         ))}
                     </div>
+
                 </div>
             )}
+            <div
+                className="fixed bottom-4 right-4 text-gray-800 p-4 ml-4 rounded-md"
+            >
+                <span className='text-yellow-400'>💡ProTip!</span> Press the <span className='text-yellow-400'>/</span> key to activate the search input again and adjust your query.
+            </div>
         </div>
     );
 };

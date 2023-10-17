@@ -184,7 +184,10 @@ const UserDataTable = () => {
                             <button
                                 key={number}
                                 onClick={() => setCurrentPage(number)}
-                                className="mx-1 px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
+                                className={`mx-1 px-4 py-2 ${number === currentPage
+                                        ? 'bg-white text-black border border-gray-400'
+                                        : 'bg-blue-500 hover:bg-blue-700 text-white'
+                                    } font-bold rounded`}
                             >
                                 {number}
                             </button>

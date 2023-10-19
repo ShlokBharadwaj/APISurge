@@ -30,7 +30,7 @@ npm i
 2. Start the server:
 
 ```
-nodemon server.js
+node server.js
 ```
 
 ### Frontend Setup
